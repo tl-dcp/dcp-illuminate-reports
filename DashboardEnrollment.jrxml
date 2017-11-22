@@ -1,0 +1,310 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Created with Jaspersoft Studio version 6.4.3.final using JasperReports Library version 6.4.3  -->
+<jasperReport xmlns="http://jasperreports.sourceforge.net/jasperreports" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://jasperreports.sourceforge.net/jasperreports http://jasperreports.sourceforge.net/xsd/jasperreport.xsd" name="DCP Enrollment Report v1.0" pageWidth="612" pageHeight="792" columnWidth="572" leftMargin="20" rightMargin="20" topMargin="20" bottomMargin="20" uuid="35596069-47e1-468f-9c51-1e8260f252c3">
+	<property name="com.jaspersoft.studio.data.defaultdataadapter" value="Dashboard/DataAdapter_Dashboard_Enrollment_Data.xml"/>
+	<property name="com.jaspersoft.studio.unit." value="pixel"/>
+	<property name="com.jaspersoft.studio.report.description" value=""/>
+	<import value="org.apache.commons.lang.time.*"/>
+	<parameter name="site" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="site_value" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="date" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="course" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="course_value" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="clean_course_value" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{course_value}.equals("all")?0:$P{course_value}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_value" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="date_value_real" class="java.util.Date" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[($P{date_value_clean}==null || $P{date_value_clean}.equals(""))
+	? null
+	: (
+DATE(
+INTEGER_VALUE($P{date_value_clean}.substring(6)),
+INTEGER_VALUE($P{date_value_clean}.substring(0,2)),
+INTEGER_VALUE($P{date_value_clean}.substring(3,5))
+	)
+)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_value_clean" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{date_value}.contains("Control Panel")
+	? ($P{date_value}.substring(15,25))
+:$P{date_value}.contains("Nearest In-Session")
+	? ($P{date_value}.substring(20,30))
+:null]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_other_start_real" class="java.util.Date" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[($P{date_other_start}.equals("")||$P{date_other_start}==null)
+	? null
+	: DATE(
+INTEGER_VALUE($P{date_other_start}.substring(6)),
+INTEGER_VALUE($P{date_other_start}.substring(0,2)),
+INTEGER_VALUE($P{date_other_start}.substring(3,5))
+)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_other_start" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="date_start" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{date_value_real}==null 
+	?  $P{date_other_start_real}
+	: $P{date_value_real}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_other_end_real" class="java.util.Date" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA[($P{date_other_end}.equals("")||$P{date_other_end}==null)
+	? null
+	: (
+DATE(
+INTEGER_VALUE($P{date_other_end}.substring(6)),
+INTEGER_VALUE($P{date_other_end}.substring(0,2)),
+INTEGER_VALUE($P{date_other_end}.substring(3,5))
+	)
+)]]></defaultValueExpression>
+	</parameter>
+	<parameter name="date_other_end" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="date_end" class="java.util.Date" isForPrompting="false">
+		<defaultValueExpression><![CDATA[$P{date_value_real}==null 
+	?  $P{date_other_end_real}
+	: $P{date_value_real}]]></defaultValueExpression>
+	</parameter>
+	<parameter name="department_value" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="department" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="group_id" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="gender" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="gender_value" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="group" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="grade_level_value" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="grade_level" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="group_value" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="is_sed" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="is_sed_value" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="is_special_ed" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="is_special_ed_value" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="logged_in_user" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="non_visibility_group" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="non_visibility_group_value" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="race_slash_ethnicity" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="race_slash_ethnicity_value" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="section" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="section_value" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="english_proficiency" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="english_proficiency_value" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="user" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="user_value" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<parameter name="student_program" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="student_program_value" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="student_value" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="visibility_sql" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["SELECT student_id FROM students"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="visibility_sql_clean" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA[SUBSTITUTE(
+	SUBSTITUTE(
+		SUBSTITUTE(
+			SUBSTITUTE(
+				SUBSTITUTE(
+					CLEAN($P{visibility_sql})
+				,"+","%2B")
+			," ","%20")
+		,"(","%28")
+	,")","%29")
+,"'","&#39;")]]></defaultValueExpression>
+	</parameter>
+	<parameter name="ILLUMINATE" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="Domain" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+		<defaultValueExpression><![CDATA["demo"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Drill Down Report URI" class="java.lang.String" isForPrompting="false">
+		<defaultValueExpression><![CDATA["Paste drill down report URI here"]]></defaultValueExpression>
+	</parameter>
+	<parameter name="Jasper User Name" class="java.lang.String" isForPrompting="false"/>
+	<parameter name="Jasper Password" class="java.lang.String" isForPrompting="false">
+		<parameterDescription><![CDATA[]]></parameterDescription>
+	</parameter>
+	<queryString language="illuminate_custom">
+		<![CDATA[]]>
+	</queryString>
+	<field name="Student ID" class="java.lang.String"/>
+	<field name="Last Name" class="java.lang.String"/>
+	<field name="First Name" class="java.lang.String"/>
+	<field name="Middle Name" class="java.lang.String"/>
+	<field name="State Student ID" class="java.lang.String"/>
+	<field name="Birth Date" class="java.lang.String"/>
+	<field name="Gender" class="java.lang.String"/>
+	<field name="Current Site Name" class="java.lang.String"/>
+	<field name="Current Grade Level" class="java.lang.String"/>
+	<field name="English Proficiency Code" class="java.lang.String"/>
+	<field name="Reported Race" class="java.lang.String"/>
+	<field name="Reported Race Code" class="java.lang.String"/>
+	<field name="Enrollment Is Current?" class="java.lang.String"/>
+	<variable name="Drill Down Parameters for HTML5 Charts" class="java.lang.String">
+		<variableExpression><![CDATA["&ILLUMINATE="+URLEncoder.encode(SUBSTITUTE($P{ILLUMINATE},"&","%26"))]]></variableExpression>
+	</variable>
+	<variable name="Drill Down JavaScript for HTML5 Charts" class="java.lang.String">
+		<variableExpression><![CDATA["javascript: function PopupCenter(url, title, w, h) {    var dualScreenLeft = window.screenLeft != undefined ? window.screenLeft : screen.left;    var dualScreenTop = window.screenTop != undefined ? window.screenTop : screen.top;    var width = parent.window.innerWidth ?parent.window.innerWidth : document.documentElement.clientWidth ? document.documentElement.clientWidth : screen.width;    var height = parent.window.innerHeight ? parent.window.innerHeight : document.documentElement.clientHeight ? document.documentElement.clientHeight : screen.height;    var left = ((width / 2) - (w / 2)) + dualScreenLeft;    var top = ((height / 2) - (h / 2)) + dualScreenTop;    var newWindow = window.open(url, title, 'location=no, titlebar=no, menubar=no, status=no, toolbar=no, scrollbars=yes, width=' + w + ', height=' + h + ', top=' + top + ', left=' + left);newWindow.document.write('<head>"
++"<style type=text/css>#backToReport {background-color:#7BBBFB;padding:.5em;-moz-border-radius: 5px;-webkit-border-radius: 5px;border-radius: 6px;color: #fff;font-family:\"Oswald\";font-size:12px;text-decoration: none;border: none;}<\\/style>"
++"<script type=text/javascript>function setVisibility(){setTimeout(function() {document.getElementById(\"drilldown\").style.visibility=\"visible\"}, 3000);};<\\/script></head><title>Illuminate Drill Down</title><body><button id=backToReport type=button onclick=javascript:window.close()>Back to Report</button><br><br><iframe id=drilldown onload=setVisibility() src=https://jasper.illuminateed.com/jasperserver-pro/flow.html?_flowId=viewReportFlow&standAlone=true&ParentFolderUri=/organizations/"
++$P{Domain}
++"/Reports/DistrictCreated&reportUnit="
++$P{Drill Down Report URI}
++"&viewAsDashboardFrame=true&j_username="+$P{Jasper User Name}+"%257C"+$P{Jasper User Name}
++"&j_password="+$P{Jasper Password}
++$V{Drill Down Parameters for HTML5 Charts}
++"%20style=visibility:hidden;width:100%;height:100vh;border:none;display:block;></iframe></body>');if(window.focus){newWindow.focus();}}var mySite=PopupCenter('about:blank','Illuminate Drill Down',585,parent.window.innerHeight*.5);"]]></variableExpression>
+	</variable>
+	<variable name="Drill Down Parameters for Text Field Drilldown" class="java.lang.String">
+		<variableExpression><![CDATA["&ILLUMINATE="+URLEncoder.encode(SUBSTITUTE($P{ILLUMINATE},"&","%26"))]]></variableExpression>
+	</variable>
+	<variable name="Drill Down Javascript for Text Fields" class="java.lang.String">
+		<variableExpression><![CDATA["javascript:function PopupCenter(url,title,w,h){var dualScreenLeft=window.screenLeft!=undefined?window.screenLeft:screen.left;var dualScreenTop=window.screenTop!=undefined?window.screenTop:screen.top;var width=parent.window.innerWidth?parent.window.innerWidth:document.documentElement.clientWidth?document.documentElement.clientWidth:screen.width;var height=parent.window.innerHeight?parent.window.innerHeight:document.documentElement.clientHeight?document.documentElement.clientHeight:screen.height;var left=((width/2)-(w/2))+dualScreenLeft;var top=((height/2)-(h/2))+dualScreenTop;var newWindow=window.open(url,title,'location=no,titlebar=no,menubar=no,status=no,toolbar=no,scrollbars=yes,width='+w+',height='+h+',top='+top+',left='+left);newWindow.document.write('<head>"
++"<style type=text\\/css>"
++URLEncoder.encode("#backToReport{background-color:#7BBBFB;padding:.5em;-moz-border-radius:5px;-webkit-border-radius:5px;border-radius:6px;color:#fff;font-family:\"Oswald\";font-size:12px;text-decoration:none;border:none;}")
++"<\\/style>"
++"<script type=text\\/javascript>"
+
++SUBSTITUTE(URLEncoder.encode("function setVisibility(){setTimeout(function(){document.getElementById(\"drilldown\").style.visibility=\"visible\"},3000);};"),"+"," ")
+
++"<\\/script>"
++"</head><title>Illuminate Drill Down</title><body><button id=backToReport type=button onclick=javascript:window.close()>Back to Report</button><br><br><iframe id=drilldown onload=setVisibility() src=https://jasper.illuminateed.com/jasperserver-pro/flow.html?_flowId=viewReportFlow&standAlone=true&ParentFolderUri=/organizations/"
++$P{Domain}
++"/Reports/DistrictCreated&reportUnit="
++$P{Drill Down Report URI}
++"&viewAsDashboardFrame=true&j_username="
++$P{Jasper User Name}+"%257C"+$P{Jasper User Name}
++"&j_password="
++$P{Jasper Password}
++$V{Drill Down Parameters for Text Field Drilldown}
++"%20style=visibility:hidden;width:100%;height:100vh;border:none;display:block;></iframe></body>');if(window.focus){newWindow.focus();}}var mySite=PopupCenter('about:blank','Illuminate Drill Down',585,parent.window.innerHeight*.5);"]]></variableExpression>
+	</variable>
+	<variable name="Tooltip Formatting for Percent Charts" class="java.lang.String">
+		<variableExpression><![CDATA["<span style=\"color:{point.color}\">\u25CF</span> {series.name}: <br><b>{point.y} Students</b><br/><b>{point.percentage:.1f}%</b>"]]></variableExpression>
+	</variable>
+	<group name="Summary">
+		<groupFooter>
+			<band height="301"/>
+		</groupFooter>
+	</group>
+	<background>
+		<band splitType="Stretch"/>
+	</background>
+	<title>
+		<band height="82" splitType="Stretch">
+			<rectangle radius="5">
+				<reportElement x="0" y="0" width="572" height="79" backcolor="#DCDDDE" uuid="abda82a9-c11b-451c-ab8e-cc4aa58ccc7c"/>
+				<graphicElement>
+					<pen lineWidth="0.0"/>
+				</graphicElement>
+			</rectangle>
+			<staticText>
+				<reportElement x="6" y="6" width="274" height="40" uuid="701d2b09-4a44-451f-8f17-4565caf5019c"/>
+				<textElement verticalAlignment="Middle">
+					<font fontName="Oswald-Bold" size="26"/>
+				</textElement>
+				<text><![CDATA[DCP Enrollment Report]]></text>
+			</staticText>
+			<staticText>
+				<reportElement x="6" y="47" width="274" height="26" isPrintWhenDetailOverflows="true" forecolor="#4E4E4E" uuid="56c190de-9826-4c6f-a52f-6842f491f78b"/>
+				<textElement verticalAlignment="Top" markup="html">
+					<font fontName="Oswald-Light" size="16" isBold="false"/>
+					<paragraph lineSpacing="Fixed" lineSpacingSize="17.0"/>
+				</textElement>
+				<text><![CDATA[With Totals by Race and EL Status]]></text>
+			</staticText>
+			<textField>
+				<reportElement x="432" y="17" width="130" height="62" forecolor="#404040" uuid="45d249ee-ece7-4d94-8c80-e4e799fade6a"/>
+				<textElement markup="html">
+					<font fontName="Roboto Condensed" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["</b>English Proficiency: <b>"+($P{english_proficiency}==null?"":$P{english_proficiency})
++"</b><br>SED Status: <b>"+$P{is_sed}
++"</b><br>Special Ed Status: <b>"+$P{is_special_ed}
++"</b><br>Race/Ethnicity: <b>"+$P{race_slash_ethnicity}
++"</b><br>Grade Level(s): <b>"+($P{grade_level}==null?"":$P{grade_level})
++"</b><br>Additional Student Group: <b>"+($P{non_visibility_group}==null?"":$P{non_visibility_group})
++"</b><br>Gender: <b>"+$P{gender}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="292" y="17" width="130" height="62" forecolor="#404040" uuid="2059b061-552a-4379-a8fc-420373668a8c"/>
+				<textElement markup="html">
+					<font fontName="Roboto Condensed" size="6"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Enrollment/Rostering Date: <b>"+($P{date_value}==null?"":$P{date_value}.equals("Custom")?($P{date_other_start}+"-"+$P{date_other_end}):$P{date_value})
++"</b><br>Site: <b>"+$P{site}
++"</b><br>Student Group: <b>"+($P{group}==null?"":$P{group})
++"</b><br>Course(s): <b>"+($P{course}==null?"":$P{course})
++"</b><br>Section(s): <b>"+($P{section}==null?"":$P{section})
++"</b><br>Teacher(s): <b>"+($P{user}==null?"":$P{user})
++"</b><br>Program(s): <b>"+($P{student_program}==null?"":$P{student_program})]]></textFieldExpression>
+			</textField>
+			<staticText>
+				<reportElement x="292" y="1" width="270" height="13" forecolor="#404040" uuid="6f9cfeb1-e5cc-4e42-b462-011c5899c607"/>
+				<box>
+					<bottomPen lineWidth="0.5" lineColor="#424242"/>
+				</box>
+				<textElement verticalAlignment="Bottom">
+					<font fontName="Roboto" isBold="true"/>
+				</textElement>
+				<text><![CDATA[Filters:]]></text>
+			</staticText>
+		</band>
+	</title>
+	<pageFooter>
+		<band height="15" splitType="Stretch">
+			<textField evaluationTime="Master">
+				<reportElement x="280" y="-1" width="292" height="15" uuid="5bb81bc8-8b6f-4550-9e39-7940041b4de2"/>
+				<textElement textAlignment="Right" verticalAlignment="Middle" markup="html">
+					<font fontName="Roboto Condensed" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Page "+$V{MASTER_CURRENT_PAGE}+" of "+$V{MASTER_TOTAL_PAGES}]]></textFieldExpression>
+			</textField>
+			<textField>
+				<reportElement x="0" y="0" width="280" height="14" uuid="3d71eb9c-5e5c-48ba-a47a-b810d6b4c2fb"/>
+				<textElement textAlignment="Left" verticalAlignment="Middle" markup="html">
+					<font fontName="Roboto Condensed" size="8"/>
+				</textElement>
+				<textFieldExpression><![CDATA["Report <b>generated</b> by "+$P{logged_in_user}+" on "+TODAY()]]></textFieldExpression>
+			</textField>
+		</band>
+	</pageFooter>
+</jasperReport>
